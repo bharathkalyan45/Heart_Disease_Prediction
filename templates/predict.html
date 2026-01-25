@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Form - CardioDetect</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="min-h-screen bg-gradient">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <div class="logo-box">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+          <span class="brand-text">CardioDetect</span>
+        </div>
+        <div class="navbar-subtitle">Health Prediction Form</div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Back Button -->
+      <a href="/" class="back-link">
+        <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Home
+      </a>
+
+      <!-- Form Card -->
+      <div class="form-card">
+        <h1 class="form-title">Enter Your Data</h1>
+        <p class="form-subtitle">Provide your medical metrics for instant heart disease risk assessment</p>
+
+        <form id="predictionForm" class="prediction-form" method="post" action="/predict">
+          <!-- First Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age" class="form-label">Age</label>
+              <input type="number" id="age" name="age" placeholder="0" min="18" max="120" class="form-input" required>
+              <p class="form-hint">Years (18-120)</p>
+            </div>
+
+            <div class="form-group">
+              <label for="restingBps" class="form-label">Resting Blood Pressure</label>
+              <input type="number" id="restingBps" name="restingBps" placeholder="0" min="50" max="250" class="form-input" required>
+              <p class="form-hint">Systolic in mmHg</p>
+            </div>
+          </div>
+
+          <!-- Second Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cholesterol" class="form-label">Cholesterol</label>
+              <input type="number" id="cholesterol" name="cholesterol" placeholder="0" min="0" max="600" class="form-input" required>
+              <p class="form-hint">In mg/dL</p>
+            </div>
+
+            <div class="form-group">
+              <label for="maxHeartRate" class="form-label">Maximum Heart Rate</label>
+              <input type="number" id="maxHeartRate" name="maxHeartRate" placeholder="0" min="30" max="220" class="form-input" required>
+              <p class="form-hint">Beats per minute</p>
+            </div>
+          </div>
+
+          <!-- Third Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="chestPainType" class="form-label">Chest Pain Type</label>
+              <select id="chestPainType" name="chestPainType" class="form-input" required>
+                <option value="" selected disabled>-- Select Chest Pain Type --</option>
+                <option value="typical anginal">Typical Angina</option>
+                <option value="atypical anginal">Atypical Angina</option>
+                <option value="non-anginal pain">Non-Anginal Pain</option>
+                <option value="asymptomatic">Asymptomatic</option>
+              </select>
+              <p class="form-hint">Type of chest pain experienced</p>
+            </div>
+
+            <div class="form-group">
+              <label for="exerciseAngina" class="form-label">Exercise Induced Angina</label>
+              <select id="exerciseAngina" name="exerciseAngina" class="form-input" required>
+                <option value="" selected disabled>-- Select --</option>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+              <p class="form-hint">Chest pain during exercise</p>
+            </div>
+          </div>
+
+          <!-- Fourth Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="oldpeak" class="form-label" >ST Depression (Oldpeak)</label>
+              <input type="number" id="oldpeak" name="oldpeak" placeholder="0" min="0" max="10" step="0.1" class="form-input" required>
+              <p class="form-hint">ST depression induced by exercise</p>
+            </div>
+
+            <div class="form-group">
+              <label for="stSlope" class="form-label">ST Slope</label>
+              <select id="stSlope" name="stSlope" class="form-input" required>
+                <option value="" selected disabled>-- Select ST-Slope Type --</option>
+                <option value="upward">Upward-sloping</option>
+                <option value="flat">Flat</option>
+                <option value="downward">Downward-sloping</option>
+              </select>
+              <p class="form-hint">ST segment slope</p>
+            </div>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-buttons">
+            <button type="submit" class="btn-primary">
+              <svg class="btn-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="13" cy="11" r="8"></circle>
+                <path d="M4.35355339,15.3553609 L9.14644661,10.5624677"></path>
+              </svg>
+              Get Prediction
+            </button>
+            <button type="reset" class="btn-secondary">Clear Form</button>
+          </div>
+        </form>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+          <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>
+            <span class="disclaimer-title">Disclaimer:</span>
+            The predictions shown are for demonstration purposes only and should not be considered reliable or authoritative.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>CardioDetect © 2026 - AI-Powered Heart Disease Prediction</p>
+    </footer>
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Results - CardioDetect</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <div class="min-h-screen bg-gradient">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <div class="logo-box">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+          <span class="brand-text">CardioDetect</span>
+        </div>
+        <div class="navbar-subtitle">Prediction Results</div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <!-- Back Button -->
+      <a href="/predict" class="back-link">
+        <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Home
+      </a>
+
+      <!-- Results Card -->
+      <div class="results-card">
+        <h1 class="results-title">Your Prediction Results</h1>
+
+        <div class="results-grid">
+
+          <!-- Main Risk Card -->
+          <div class="risk-card">
+
+            <div class="risk-header">
+              <div>
+                <p class="risk-label">Risk Assessment</p>
+
+                <h2 class="risk-level">
+                  {% if prediction == 1 %}
+                    High Risk
+                  {% else %}
+                    Low Risk
+                  {% endif %}
+                </h2>
+              </div>
+
+              <div class="risk-icon-box {% if prediction == 1 %}high-risk{% else %}low-risk{% endif %}">
+                {% if prediction == 1 %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                {% else %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Confidence -->
+            <div class="confidence-section">
+              <div class="confidence-header">
+                <span class="confidence-label">Confidence Score</span>
+                <span class="confidence-percentage">{{ confidence }}%</span>
+              </div>
+
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ confidence }}%"></div>
+              </div>
+            </div>
+
+            <!-- Description -->
+           <p class="risk-description">
+  {% if prediction == 1 and confidence >= 70 %}
+    Your cardiovascular metrics indicate a <strong>high risk</strong> of heart disease
+    with a confidence of <strong>{{ confidence }}%</strong>.
+    Immediate medical consultation is recommended.
+
+  {% elif prediction == 1 %}
+    Your cardiovascular metrics indicate a <strong>moderate risk</strong> of heart disease
+    with a confidence of <strong>{{ confidence }}%</strong>.
+    Preventive lifestyle changes are advised.
+
+  {% else %}
+    Your cardiovascular metrics indicate a <strong>low risk</strong> of heart disease
+    with a confidence of <strong>{{ confidence }}%</strong>.
+    Continue maintaining a healthy lifestyle.
+  {% endif %}
+</p>
+
+          </div>
+
+          <!-- Stats -->
+          <div class="stats-section">
+            <div class="stat-card">
+              <p class="stat-label">Analysis</p>
+              <p class="stat-value">8/8</p>
+              <p class="stat-subtitle">Metrics Analyzed</p>
+            </div>
+
+            <div class="stat-card">
+              <p class="stat-label">Model</p>
+              <p class="stat-value">v2.1</p>
+              <p class="stat-subtitle">Latest Version</p>
+            </div>
+
+            <div class="stat-card">
+              <p class="stat-label">Status</p>
+              <p class="stat-value">Complete</p>
+              <p class="stat-subtitle">Analysis Done</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="recommendations-section">
+  <h3 class="recommendations-title">Recommendations</h3>
+
+  <ul class="recommendations-list">
+
+    {% if prediction == 1 and confidence >= 70 %}
+      <!-- HIGH RISK -->
+      <li><span class="bullet">•</span> Consult a cardiologist immediately.</li>
+      <li><span class="bullet">•</span> Strictly control blood pressure, sugar, and cholesterol.</li>
+      <li><span class="bullet">•</span> Avoid smoking and alcohol completely.</li>
+      <li><span class="bullet">•</span> Follow prescribed medications and routine monitoring.</li>
+
+    {% elif prediction == 1 %}
+      <!-- MEDIUM RISK -->
+      <li><span class="bullet">•</span> Schedule a medical checkup.</li>
+      <li><span class="bullet">•</span> Reduce salt, sugar, and saturated fats.</li>
+      <li><span class="bullet">•</span> Engage in regular physical activity.</li>
+      <li><span class="bullet">•</span> Monitor vitals periodically.</li>
+
+    {% else %}
+      <!-- LOW RISK -->
+      <li><span class="bullet">•</span> Maintain a healthy and active lifestyle.</li>
+      <li><span class="bullet">•</span> Eat a balanced, heart-friendly diet.</li>
+      <li><span class="bullet">•</span> Get routine health checkups.</li>
+      <li><span class="bullet">•</span> Manage stress and sleep well.</li>
+
+    {% endif %}
+
+  </ul>
+</div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+          <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <p>
+            <span class="disclaimer-title">Important:</span>
+            This prediction is generated by an AI model for educational purposes only and is not a medical diagnosis.
+          </p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="results-actions">
+        <a href="/predict" class="btn-primary">New Assessment</a>
+        <button class="btn-secondary" onclick="window.print()">Print Results</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>CardioDetect © 2026 - AI-Powered Heart Disease Prediction</p>
+    </footer>
+
+  </div>
+</body>
+</html>
